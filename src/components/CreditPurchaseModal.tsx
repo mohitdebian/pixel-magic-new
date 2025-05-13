@@ -76,6 +76,15 @@ export const CreditPurchaseModal = ({ isOpen, onClose, userId }: CreditPurchaseM
         currency: "INR",
         name: "Pixel Magic Credits",
         description: `Purchase ${amount} credits (₹${price} | $${convertInrToUsd(price)})`,
+        modal: {
+          ondismiss: () => {
+            setIsLoading(false);
+            setSelectedPackage(null);
+          },
+          confirm_close: true,
+          escape: false,
+          backdropClose: false
+        },
         handler: async function(response: any) {
           if (response.razorpay_payment_id) {
             // Process the credit purchase after successful payment
@@ -99,6 +108,9 @@ export const CreditPurchaseModal = ({ isOpen, onClose, userId }: CreditPurchaseM
           currency_conversion: `Equivalent to $${convertInrToUsd(price)} USD`
         }
       };
+      
+      // Close our modal before opening Razorpay
+      onClose();
       
       // Create a new instance of Razorpay
       const razorpay = new window.Razorpay(options);
@@ -124,8 +136,8 @@ export const CreditPurchaseModal = ({ isOpen, onClose, userId }: CreditPurchaseM
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-[#1a1a1a] border-[#2d2d2d] max-w-md max-h-[90vh] overflow-y-auto">
+    <Dialog open={isOpen} onOpenChange={onClose} modal>
+      <DialogContent className="bg-[#1a1a1a] border-[#2d2d2d] max-w-md w-[90vw] max-h-[90vh] overflow-y-auto">
         <DialogHeader className="text-center pb-1">
           <DialogTitle className="text-white text-xl font-bold">Power Up Your Creativity</DialogTitle>
           <DialogDescription className="text-gray-400 text-sm mt-1">

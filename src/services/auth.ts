@@ -14,7 +14,7 @@ import { auth, db } from '../lib/firebase';
 import { toast } from 'sonner';
 
 const INITIAL_CREDITS = 100;
-const CREDITS_PER_GENERATION = 20;
+const CREDITS_PER_GENERATION = 10;
 
 // Add error logging
 const logError = (error: any, context: string) => {

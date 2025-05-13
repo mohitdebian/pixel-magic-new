@@ -12,9 +12,9 @@ interface CreditPurchaseModalProps {
 }
 
 const CREDIT_PACKAGES = [
-  { amount: 100, price: 25, popular: false, icon: "✨" },
-  { amount: 500, price: 90, popular: true, icon: "🔥" },
-  { amount: 1000, price: 175, popular: false, icon: "⚡" },
+  { amount: 100, price: 15, popular: false, icon: "✨" },  // 10 images for $15 (~$1.5/image)
+  { amount: 500, price: 50, popular: true, icon: "🔥" },  // 50 images for $50 ($1/image)
+  { amount: 1000, price: 90, popular: false, icon: "⚡" }, // 100 images for $90 ($0.9/image)
 ];  
 
 declare global {
@@ -24,6 +24,7 @@ declare global {
 }
 
 // Razorpay API credentials
+// const RAZORPAY_KEY_ID = "rzp_test_BRLNwkXJVOGoQE";
 const RAZORPAY_KEY_ID = "rzp_live_xruFKEcNeWmzBk"; // Live key
 
 // Exchange rate: INR to USD (as of current date)

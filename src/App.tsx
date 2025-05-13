@@ -32,6 +32,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <BrowserRouter>
+          <Analytics />
           <div className="relative min-h-screen">
             <div className="absolute top-4 left-4 z-50">
               <a href="/" className="flex items-center gap-2 text-white hover:opacity-80 transition-opacity">
@@ -72,7 +73,6 @@ const App = () => {
           isOpen={isAuthModalOpen}
           onClose={() => setIsAuthModalOpen(false)}
         />
-        <Analytics />
       </TooltipProvider>
     </QueryClientProvider>
   );

@@ -127,10 +127,11 @@ export const CreditPurchaseModal = ({ isOpen, onClose, userId }: CreditPurchaseM
 
   const getValueText = (amount: number, price: number) => {
     const pricePerCredit = price / amount;
+    const costPerImage = (price / amount) * 10; // Cost per image (10 credits per image)
     
-    if (amount === 100) return `Basic`;
-    if (amount === 500) return `Best Value`;
-    if (amount === 1000) return `Pro Pack`;
+    if (amount === 100) return 'Basic';
+    if (amount === 500) return 'Best Value';
+    if (amount === 1000) return 'Pro Pack';
     
     return `₹${(pricePerCredit).toFixed(2)} | $${convertInrToUsd(pricePerCredit).toFixed(4)} per credit`;
   };
@@ -169,7 +170,7 @@ export const CreditPurchaseModal = ({ isOpen, onClose, userId }: CreditPurchaseM
                       <h3 className="text-white font-bold text-lg">{pkg.amount} Credits</h3>
                       <p className="text-blue-400 text-xs">{getValueText(pkg.amount, pkg.price)}</p>
                       <p className="text-gray-300 text-xs">
-                        ₹{((pkg.price / pkg.amount) * 20).toFixed(2)} | ${(convertInrToUsd((pkg.price / pkg.amount) * 20)).toFixed(2)} per image
+                        ₹{((pkg.price / pkg.amount) * 10).toFixed(2)} | ${convertInrToUsd((pkg.price / pkg.amount) * 10).toFixed(2)} per image
                       </p>
                     </div>
                   </div>

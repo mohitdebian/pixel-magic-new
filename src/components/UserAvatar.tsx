@@ -5,15 +5,19 @@ import { loginWithGoogle, logout, getUserCredits, onAuthStateChange, onCreditUpd
 import { toast } from 'sonner';
 import { CreditPurchaseModal } from './CreditPurchaseModal';
 import { SparklesIcon } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './ui/dialog';
+import { Button } from './ui/button';
 
 // Credits needed per image generation
-const CREDITS_PER_GENERATION = 20;
+const CREDITS_PER_GENERATION = 10;
 
 export const UserAvatar = () => {
   const [user, setUser] = useState<User | null>(null);
   const [credits, setCredits] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isPurchaseModalOpen, setIsPurchaseModalOpen] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [tutorialStep, setTutorialStep] = useState(0);
 
   useEffect(() => {
     let unsubscribeCredits: (() => void) | undefined;
@@ -40,6 +44,43 @@ export const UserAvatar = () => {
       }
     };
   }, []);
+
+  // Show tutorial dialog if not logged in
+  useEffect(() => {
+    if (!user && !isLoading) {
+      setShowTutorial(true);
+      setTutorialStep(0);
+    } else {
+      setShowTutorial(false);
+    }
+  }, [user, isLoading]);
+
+  const tutorialSteps = [
+    {
+      title: 'Welcome to Pixel Magic!',
+      description: 'Generate AI images in seconds. Let us show you how to get started.'
+    },
+    {
+      title: 'Step 1: Sign In',
+      description: 'Sign in with Google to start generating images and track your credits.'
+    },
+    {
+      title: 'Step 2: Enter a Prompt',
+      description: 'Describe what you want to see. The AI will create an image based on your prompt.'
+    },
+    {
+      title: 'Step 3: Generate & Download',
+      description: 'Click generate, then download or share your masterpiece!'
+    }
+  ];
+
+  const handleNextTutorial = () => {
+    if (tutorialStep < tutorialSteps.length - 1) {
+      setTutorialStep(tutorialStep + 1);
+    } else {
+      setShowTutorial(false);
+    }
+  };
 
   const handleGoogleLogin = async () => {
     try {
@@ -277,6 +318,21 @@ export const UserAvatar = () => {
           userId={user.uid}
         />
       )}
+
+      {/* Tutorial Dialog for not-logged-in users */}
+      <Dialog open={showTutorial} onOpenChange={setShowTutorial}>
+        <DialogContent className="max-w-md w-full">
+          <DialogHeader>
+            <DialogTitle>{tutorialSteps[tutorialStep].title}</DialogTitle>
+            <DialogDescription>{tutorialSteps[tutorialStep].description}</DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end mt-6">
+            <Button onClick={handleNextTutorial}>
+              {tutorialStep === tutorialSteps.length - 1 ? 'Finish' : 'Next'}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }; 

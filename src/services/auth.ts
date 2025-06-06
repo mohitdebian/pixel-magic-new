@@ -13,7 +13,7 @@ import { doc, setDoc, getDoc, updateDoc, increment, onSnapshot, collection, quer
 import { auth, db } from '../lib/firebase';
 import { toast } from 'sonner';
 
-const INITIAL_CREDITS = 100;
+const INITIAL_CREDITS = 50;
 const CREDITS_PER_GENERATION = 10;
 
 // Add error logging
